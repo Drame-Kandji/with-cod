@@ -4,7 +4,7 @@ import service1 from "../assets/images/service1.png";
 import service2 from "../assets/images/service2.png";
 import service3 from "../assets/images/service3.png";
 import service4 from "../assets/images/service4.png";
-import service5 from "../assets/images/service5.png";
+import service5 from "../assets/images/service05.png";
 import service6 from "../assets/images/service6.png";
 import acceuilImage from "../assets/images/imageAcceuil.png";
 

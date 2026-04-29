@@ -1,5 +1,25 @@
-import { Menu, X, Building2, Code, Wrench, Users, CheckCircle, Phone, Mail, MapPin, Sun, Moon, Hammer, LineChart, Database, Shield, Zap, Globe} from "lucide-react";
+import {
+  Menu,
+  X,
+  Building2,
+  Code,
+  Wrench,
+  Users,
+  CheckCircle,
+  Phone,
+  Mail,
+  MapPin,
+  Sun,
+  Moon,
+  Hammer,
+  LineChart,
+  Database,
+  Shield,
+  Zap,
+  Globe,
+} from "lucide-react";
 import { useState, useEffect } from "react";
+import logo from "../assets/images/logo.png";
 import service1 from "../assets/images/service1.png";
 import service2 from "../assets/images/service2.png";
 import service3 from "../assets/images/service3.png";
@@ -95,14 +115,15 @@ function App() {
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 rounded-lg overflow-hidden bg-white flex items-center justify-center shadow-sm border border-amber-100">
+                  <img
+                    src={logo}
+                    alt="STRID logo"
+                    className="w-full h-full object-contain p-1"
+                  />
                 </div>
                 <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  BuildTech
-                  <span className="text-amber-700 dark:text-amber-500">
-                    Pro
-                  </span>
+                  STRID
                 </span>
               </div>
 
@@ -485,7 +506,7 @@ function App() {
                       Email
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      buildtech@pro.sn
+                      contact@strid.sn
                     </p>
                   </div>
                 </div>
@@ -586,19 +607,23 @@ function App() {
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-4 gap-8 mb-8">
               <div className="md:col-span-2">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-white" />
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+                  <img
+                    src={logo}
+                    alt="STRID logo"
+                    className="w-24 h-auto sm:w-28 md:w-32 object-contain flex-shrink-0"
+                  />
+                  <div className="max-w-md">
+                    <span className="block text-xl font-bold text-white">
+                      STRID
+                    </span>
+                    <p className="mt-2 text-gray-400 leading-relaxed text-sm">
+                      L'alliance du génie civil et de la technologie pour des
+                      solutions modernes et accessibles. Votre partenaire de
+                      confiance pour tous vos projets.
+                    </p>
                   </div>
-                  <span className="text-xl font-bold">
-                    BuildTech<span className="text-amber-500">Pro</span>
-                  </span>
                 </div>
-                <p className="text-gray-400 leading-relaxed text-sm max-w-md">
-                  L'alliance du génie civil et de la technologie pour des
-                  solutions modernes et accessibles. Votre partenaire de
-                  confiance pour tous vos projets.
-                </p>
               </div>
 
               <div>
@@ -651,7 +676,7 @@ function App() {
             </div>
 
             <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-              <p>&copy; 2025 BuildTechPro. Tous droits réservés.</p>
+              <p>&copy; 2025 STRID. Tous droits réservés.</p>
             </div>
           </div>
         </footer>

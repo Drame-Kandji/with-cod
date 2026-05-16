@@ -18,6 +18,7 @@ import {
   Zap,
   Globe,
 } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { useState, useEffect } from "react";
 import logo from "../assets/images/logo.png";
 import service1 from "../assets/images/service1.png";
@@ -27,10 +28,28 @@ import service4 from "../assets/images/service4.png";
 import service5 from "../assets/images/service05.png";
 import service6 from "../assets/images/service6.png";
 import acceuilImage from "../assets/images/imageAcceuil.png";
+import brique1 from "../assets/images/brique1.png";
+import brique2 from "../assets/images/brique2.png";
+import brique3 from "../assets/images/brique3.png";
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">(
+    "idle",
+  );
+  const [statusMessage, setStatusMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -48,6 +67,66 @@ function App() {
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
+    }
+  };
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target;
+    setFormData((currentData) => ({
+      ...currentData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormStatus("idle");
+    setStatusMessage("");
+
+    if (!serviceId || !templateId || !publicKey) {
+      setFormStatus("error");
+      setStatusMessage(
+        "EmailJS n'est pas encore configuré. Ajoute les identifiants dans le fichier .env.",
+      );
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          reply_to: formData.email,
+          to_name: "STRID",
+        },
+        {
+          publicKey,
+        },
+      );
+
+      setFormStatus("success");
+      setStatusMessage("Message envoyé avec succès vers votre Gmail.");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch {
+      setFormStatus("error");
+      setStatusMessage(
+        "Envoi impossible pour le moment. Veuillez réessayer plus tard ou nous contacter directement par email.",
+      );
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -93,6 +172,24 @@ function App() {
       description:
         "Assistance experte dans la planification et l'analyse de faisabilité de vos projets.",
       image: service6,
+    },
+    {
+      icon: Building2,
+      title: "Brique Pleine",
+      description: "Briques pleines de qualité, haute densité pour des fondations robustes.",
+      image: brique2,
+    },
+    {
+      icon: Building2,
+      title: "Brique Creuse",
+      description: "Briques creuses légères offrant une bonne isolation thermique.",
+      image: brique1,
+    },
+    {
+      icon: Building2,
+      title: "Brique Réfractaire",
+      description: "Briques résistantes à la chaleur pour usages spécifiques.",
+      image: brique3,
     },
   ];
 
@@ -315,6 +412,9 @@ function App() {
             </div>
           </div>
         </section>
+
+        
+
 
         {/* Services Section */}
         <section
@@ -546,15 +646,22 @@ function App() {
                 </div>
               </div>
 
-              <form className="space-y-6 bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700">
+              <form
+                className="space-y-6 bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700"
+                onSubmit={handleSubmit}
+              >
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Nom complet
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                     placeholder="Votre nom"
+                    required
                   />
                 </div>
 
@@ -564,8 +671,12 @@ function App() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                     placeholder="votre@email.com"
+                    required
                   />
                 </div>
 
@@ -575,6 +686,9 @@ function App() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                     placeholder="+221 77 123 45 67"
                   />
@@ -586,16 +700,33 @@ function App() {
                   </label>
                   <textarea
                     rows={4}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
                     placeholder="Décrivez votre projet..."
+                    required
                   ></textarea>
                 </div>
 
+                {statusMessage ? (
+                  <p
+                    className={`text-sm ${
+                      formStatus === "success"
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {statusMessage}
+                  </p>
+                ) : null}
+
                 <button
                   type="submit"
-                  className="w-full bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all transform hover:scale-105 font-medium shadow-lg text-sm"
+                  disabled={isSending}
+                  className="w-full bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all transform hover:scale-105 font-medium shadow-lg text-sm disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  Envoyer le Message
+                  {isSending ? "Envoi en cours..." : "Envoyer le Message"}
                 </button>
               </form>
             </div>

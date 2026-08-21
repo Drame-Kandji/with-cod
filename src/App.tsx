@@ -30,7 +30,8 @@ import service6 from "../assets/images/service6.png";
 import acceuilImage from "../assets/images/imageAcceuil.png";
 import brique1 from "../assets/images/brique1.png";
 import brique2 from "../assets/images/brique2.png";
-import brique3 from "../assets/images/brique3.png";
+import brique4 from "../assets/images/brique4.png";
+
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -187,9 +188,9 @@ function App() {
     },
     {
       icon: Building2,
-      title: "Brique Réfractaire",
+      title: "Brique hourdis",
       description: "Briques résistantes à la chaleur pour usages spécifiques.",
-      image: brique3,
+      image: brique4,
     },
   ];
 

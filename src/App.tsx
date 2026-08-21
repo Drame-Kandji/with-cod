@@ -190,7 +190,7 @@ function App() {
     {
       icon: Building2,
       title: "Brique hourdis",
-      description: "Briques résistantes à la chaleur pour usages spécifiques.",
+      description: "Briques hourdis pour planchers et toitures, résistantes et durables.",
       image: brique4,
     },
   ];
@@ -397,7 +397,19 @@ function App() {
                     className="w-full h-full object-cover opacity-90"
                   />
                 </div>
-                
+                <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl border-2 border-amber-200 dark:border-amber-900 max-w-xs">
+                  <div className="flex items-center space-x-3">
+                    <Shield className="w-10 h-10 text-amber-700 dark:text-amber-500" />
+                    <div>
+                      <div className="font-bold text-gray-900 dark:text-white">
+                        Qualité Garantie
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        Certification professionnelle
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

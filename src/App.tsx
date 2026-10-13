@@ -531,7 +531,7 @@ function App() {
                       Email
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      contact@strid.sn
+                      contact@groupestrid.com
                     </p>
                   </div>
                 </div>
@@ -581,16 +581,14 @@ function App() {
                 </p>
                 <div className="flex w-full flex-col sm:flex-row gap-3">
                   <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=contact%40strid.sn"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 text-center bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all transform hover:scale-105 font-medium shadow-lg text-sm"
+                    href="mailto:contact@groupestrid.com"
+                    className="flex-1 text-center bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all md:hover:scale-105 font-medium shadow-lg text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
                   >
                     Nous écrire par email
                   </a>
                   <a
                     href="tel:+221786507305"
-                    className="flex-1 text-center border border-amber-700 text-amber-800 dark:text-amber-400 px-6 py-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-all font-medium text-sm"
+                    className="flex-1 text-center border border-amber-700 text-amber-800 dark:text-amber-400 px-6 py-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-all font-medium text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
                   >
                     Nous appeler
                   </a>

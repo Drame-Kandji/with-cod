@@ -18,7 +18,6 @@ import {
   Zap,
   Globe,
 } from "lucide-react";
-import emailjs from "@emailjs/browser";
 import { useState, useEffect } from "react";
 import logo from "../assets/images/logo.png";
 import service1 from "../assets/images/service1.png";
@@ -37,22 +36,6 @@ import brique4 from "../assets/images/brique4.png";
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isSending, setIsSending] = useState(false);
-  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">(
-    "idle",
-  );
-  const [statusMessage, setStatusMessage] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -69,66 +52,6 @@ function App() {
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
-    }
-  };
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target;
-    setFormData((currentData) => ({
-      ...currentData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFormStatus("idle");
-    setStatusMessage("");
-
-    if (!serviceId || !templateId || !publicKey) {
-      setFormStatus("error");
-      setStatusMessage(
-        "EmailJS n'est pas encore configuré. Ajoute les identifiants dans le fichier .env.",
-      );
-      return;
-    }
-
-    setIsSending(true);
-
-    try {
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          reply_to: formData.email,
-          to_name: "STRID",
-        },
-        {
-          publicKey,
-        },
-      );
-
-      setFormStatus("success");
-      setStatusMessage("Message envoyé avec succès vers votre Gmail.");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-    } catch {
-      setFormStatus("error");
-      setStatusMessage(
-        "Envoi impossible pour le moment. Veuillez réessayer plus tard ou nous contacter directement par email.",
-      );
-    } finally {
-      setIsSending(false);
     }
   };
 
@@ -397,7 +320,19 @@ function App() {
                     className="w-full h-full object-cover opacity-90"
                   />
                 </div>
-                
+                {/* <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl border-2 border-amber-200 dark:border-amber-900 max-w-xs">
+                  <div className="flex items-center space-x-3">
+                    <Shield className="w-10 h-10 text-amber-700 dark:text-amber-500" />
+                    <div>
+                      <div className="font-bold text-gray-900 dark:text-white">
+                        Qualité Garantie
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        Certification professionnelle
+                      </div>
+                    </div>
+                  </div> 
+                </div> */}
               </div>
             </div>
           </div>
@@ -582,7 +517,7 @@ function App() {
                       Téléphone
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      +221 33 444 55 66
+                      +221 78 650 73 05
                     </p>
                   </div>
                 </div>
@@ -636,89 +571,31 @@ function App() {
                 </div>
               </div>
 
-              <form
-                className="space-y-6 bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700"
-                onSubmit={handleSubmit}
-              >
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Nom complet
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                    placeholder="Votre nom"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                    placeholder="votre@email.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Téléphone
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                    placeholder="+221 77 123 45 67"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    rows={4}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:border-amber-700 dark:focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-700/20 dark:focus:ring-amber-500/20 transition-colors resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm"
-                    placeholder="Décrivez votre projet..."
-                    required
-                  ></textarea>
-                </div>
-
-                {statusMessage ? (
-                  <p
-                    className={`text-sm ${
-                      formStatus === "success"
-                        ? "text-green-600 dark:text-green-400"
-                        : "text-red-600 dark:text-red-400"
-                    }`}
+              <div className="flex flex-col items-center justify-center text-center bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl border border-gray-100 dark:border-gray-700">
+                <Mail className="w-12 h-12 text-amber-700 dark:text-amber-500 mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  Écrivez-nous par email
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
+                  Cliquez ci-dessous pour nous contacter directement.
+                </p>
+                <div className="flex w-full flex-col sm:flex-row gap-3">
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=contact%40strid.sn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 text-center bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all transform hover:scale-105 font-medium shadow-lg text-sm"
                   >
-                    {statusMessage}
-                  </p>
-                ) : null}
-
-                <button
-                  type="submit"
-                  disabled={isSending}
-                  className="w-full bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-all transform hover:scale-105 font-medium shadow-lg text-sm disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100"
-                >
-                  {isSending ? "Envoi en cours..." : "Envoyer le Message"}
-                </button>
-              </form>
+                    Nous écrire par email
+                  </a>
+                  <a
+                    href="tel:+221786507305"
+                    className="flex-1 text-center border border-amber-700 text-amber-800 dark:text-amber-400 px-6 py-3 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700 transition-all font-medium text-sm"
+                  >
+                    Nous appeler
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -797,7 +674,7 @@ function App() {
             </div>
 
             <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-              <p>&copy; 2025 STRID. Tous droits réservés.</p>
+              <p>&copy; 2026 STRID. Tous droits réservés.</p>
             </div>
           </div>
         </footer>

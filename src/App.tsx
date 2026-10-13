@@ -14,7 +14,7 @@ import {
   Hammer,
   LineChart,
   Database,
-  Shield,
+  //Shield,
   Zap,
   Globe,
 } from "lucide-react";

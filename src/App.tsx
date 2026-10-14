@@ -260,8 +260,9 @@ function App() {
                     Innovation & Expertise
                   </span>
                 </div>
+               
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                  Génie Civil{" "}
+                  STRID : Génie Civil{" "}
                   <span className="text-amber-700 dark:text-amber-500">&</span>{" "}
                   Solutions Digitales
                 </h1>
